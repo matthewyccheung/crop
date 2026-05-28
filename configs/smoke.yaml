@@ -1,0 +1,16 @@
+seed: 0
+alpha_values: [0.1, 0.2]
+model_names: ["logistic_l2", "gradient_boosting"]
+data:
+  source: "toy"
+  n_traces: 200
+  min_steps: 3
+  max_steps: 8
+  n_features: 55
+  error_rate: 0.15
+split:
+  train_frac: 0.6
+  cal_frac: 0.2
+  test_frac: 0.2
+prefix_crc:
+  lambda_grid_size: 101

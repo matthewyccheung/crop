@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "crop"
+version = "0.1.0"
+description = "CROP conformal prediction and risk-control utilities"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy",
+  "pandas",
+  "scikit-learn",
+  "matplotlib",
+  "pyyaml",
+  "requests",
+  "tabulate",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.setuptools.packages.find]
+include = ["crop*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

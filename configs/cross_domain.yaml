@@ -1,0 +1,10 @@
+seed_values: [0, 1, 2, 3, 4]
+alpha_values: [0.1]
+model_names: ["logistic_l2", "gradient_boosting"]
+domains: ["arithmetic", "boolean", "gsm8k"]
+split:
+  train_frac: 0.6
+  cal_frac: 0.2
+  test_frac: 0.2
+prefix_crc:
+  lambda_grid_size: 1001

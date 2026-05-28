@@ -1,0 +1,16 @@
+seed_values: [0, 1, 2, 3, 4]
+alpha_values: [0.01, 0.05, 0.1, 0.2]
+model_names: ["logistic_l2", "gradient_boosting", "random_forest"]
+data:
+  features:
+    - path: "data/features/arithmetic_after.npz"
+      domain: "arithmetic"
+      complexity: null
+split:
+  train_frac: 0.6
+  cal_frac: 0.2
+  test_frac: 0.2
+prefix_crc:
+  lambda_grid_size: 1001
+mondrian:
+  min_cal_per_group: 50
