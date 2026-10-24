@@ -92,7 +92,7 @@ Install the experiment dependencies:
 python -m pip install -e ".[demo,dev]"
 ```
 
-Download the companion paper caches using the URL provided with the release:
+Download the companion paper caches using the URL provided with the release (TODO, but these can be recreated with the code base):
 
 ```bash
 python scripts/download_artifacts.py --base-url "$CROP_ARTIFACT_URL"
@@ -119,13 +119,14 @@ PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -m pytest -q
 ```
 
 ## Citation
-
+```
 @article{cheung2026conformal,
   title={Conformal Certification of Reasoning Trace Prefixes},
   author={Cheung, Matt Y and Veeraraghavan, Ashok and Chen, Hanjie and Balakrishnan, Guha},
   journal={arXiv preprint arXiv:2605.30085},
   year={2026}
 }
+```
 
 ## License
 
