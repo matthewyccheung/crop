@@ -84,6 +84,26 @@ The notebook walks through data preparation, calibration, prefix
 certification, evaluation, and alpha sensitivity. It does not require a model
 download or external dataset.
 
+The core CROP algorithm is only a few operations:
+
+```python
+import numpy as np
+
+from crop.risk_control import prefix_lengths, prefix_losses_by_lambda, select_lambda_crc
+
+lambdas = np.r_[-np.inf, np.unique(np.concatenate(calibration_scores))]
+losses = prefix_losses_by_lambda(calibration_traces, calibration_scores, lambdas)
+lambda_hat, risk = select_lambda_crc(losses, lambdas, alpha=0.05, direction="increasing")
+certified_lengths = prefix_lengths(test_scores, lambda_hat)
+```
+
+For a concise implementation from first principles, open the standalone
+[algorithm notebook](examples/crop_algorithm.ipynb):
+
+```bash
+jupyter lab examples/crop_algorithm.ipynb
+```
+
 ## Reproducing the paper results
 
 Install the experiment dependencies:
