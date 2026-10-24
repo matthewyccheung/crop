@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use CROP, please cite the paper and this software release."
+title: "CROP: Conformal Certification of Reasoning Trace Prefixes"
+type: software
+version: 0.2.0
+date-released: 2026-10-24
+repository-code: "https://github.com/matthewyccheung/crop"
+license: MIT
+authors:
+  - family-names: Cheung
+    given-names: Matt Y.
+  - family-names: Veeraraghavan
+    given-names: Ashok
+  - family-names: Chen
+    given-names: Hanjie
+  - family-names: Balakrishnan
+    given-names: Guha
+preferred-citation:
+  type: article
+  title: "Conformal Certification of Reasoning Trace Prefixes"
+  year: 2026
+  authors:
+    - family-names: Cheung
+      given-names: Matt Y.
+    - family-names: Veeraraghavan
+      given-names: Ashok
+    - family-names: Chen
+      given-names: Hanjie
+    - family-names: Balakrishnan
+      given-names: Guha

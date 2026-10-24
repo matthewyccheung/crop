@@ -1,6 +1,6 @@
 # Expected Inputs
 
-The release is source-only. Create or provide these files before running the
+Download the companion paper caches or create these files before running the
 paper-result scripts:
 
 - Target annotations: `data/crop_hf/`
@@ -18,3 +18,7 @@ All `.npz` feature files should contain:
 - `features`: numeric feature matrix
 - `metadata`: per-step or per-trace metadata dictionaries
 - `feature_names`: feature column names when available
+
+PRM CSV files contain one row per step with at least `trace_id`, `step_id`, and
+`qwen_prm_error`; larger scores indicate greater error risk. Trace IDs and step
+IDs must match the feature metadata exactly.

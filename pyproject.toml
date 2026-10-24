@@ -4,9 +4,22 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "crop"
-version = "0.1.0"
-description = "CROP conformal prediction and risk-control utilities"
+version = "0.2.0"
+description = "Conformal risk-controlled prefixes for sequential model outputs"
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [{name = "Matt Y. Cheung"}]
 requires-python = ">=3.10"
+keywords = ["conformal prediction", "risk control", "reasoning", "uncertainty quantification"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
 dependencies = [
   "numpy",
   "pandas",
@@ -18,7 +31,13 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest"]
+dev = ["pytest", "nbclient", "nbformat"]
+demo = ["jupyterlab", "nbclient", "nbformat"]
+
+[project.urls]
+Homepage = "https://github.com/matthewyccheung/crop"
+Repository = "https://github.com/matthewyccheung/crop"
+Issues = "https://github.com/matthewyccheung/crop/issues"
 
 [tool.setuptools.packages.find]
 include = ["crop*"]

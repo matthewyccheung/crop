@@ -7,6 +7,7 @@ export PYTHONWARNINGS=ignore
 export OMP_NUM_THREADS="${OMP_NUM_THREADS:-1}"
 export OPENBLAS_NUM_THREADS="${OPENBLAS_NUM_THREADS:-1}"
 export MKL_NUM_THREADS="${MKL_NUM_THREADS:-1}"
+PYTHON_BIN="${PYTHON_BIN:-python}"
 
 SEEDS=(2806 2807 2808 2809 2810 2811 2812 2813 2814 2815)
 
@@ -17,7 +18,19 @@ run_dataset() {
   local qwen_scores="$4"
   local output_dir="$5"
 
-  python -m crop.experiments.exp15_prefix_aware \
+  if [[ -f "$output_dir/table_prefix_aware_summary.csv" ]]; then
+    cache_complete=$("$PYTHON_BIN" -c 'import pandas as pd, sys; d=pd.read_csv(sys.argv[1]); expected={"random","artifact_token_formatting_logistic_l2","combined_logistic_l2","qwen_prm_error","step_qwen_combined_logistic_l2"}; print(int(len(d)==5 and set(d["score"])==expected and (d["auroc_n"].astype(int)==10).all()))' "$output_dir/table_prefix_aware_summary.csv")
+    if [[ "$cache_complete" == 1 ]]; then
+      echo "cached; skipping dataset=$dataset_name"
+      return
+    fi
+  fi
+  if [[ -d "$output_dir" ]] && find "$output_dir" -type f -print -quit | grep -q .; then
+    echo "Refusing to overwrite partial external results: $output_dir" >&2
+    return 2
+  fi
+
+  "$PYTHON_BIN" -m crop.experiments.exp15_prefix_aware \
     --dataset_name "$dataset_name" \
     --step_text_features "$text_features" \
     --step_combined_features "$combined_features" \
@@ -58,4 +71,4 @@ run_dataset \
   outputs/fixed_score_60_20_20/prm800k &
 
 wait
-python scripts/build_fixed_score_table.py
+"$PYTHON_BIN" scripts/build_fixed_score_table.py

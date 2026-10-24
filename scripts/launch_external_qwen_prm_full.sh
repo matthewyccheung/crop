@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+if [[ "${RUN_EXPENSIVE:-0}" != "1" ]]; then
+  echo "No inference launched. Use cached artifacts, or set RUN_EXPENSIVE=1 explicitly."
+  exit 0
+fi
+
 PYTHON_BIN="${PYTHON_BIN:-python}"
 SCORER="crop/scripts/score_qwen_prm.py"
 BASE="outputs/strengthened/final/external_process"

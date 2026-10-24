@@ -1,16 +1,7 @@
-"""CROP research utilities."""
+"""CROP: conformal risk-controlled prefixes for sequential outputs."""
 
-__all__ = [
-    "data",
-    "labels",
-    "splits",
-    "models",
-    "scores",
-    "conformal",
-    "risk_control",
-    "sequence",
-    "metrics",
-    "feature_groups",
-]
+from .api import PrefixCalibrator, fit_prefix_calibrator
 
-__version__ = "0.1.0"
+__all__ = ["PrefixCalibrator", "fit_prefix_calibrator"]
+
+__version__ = "0.2.0"

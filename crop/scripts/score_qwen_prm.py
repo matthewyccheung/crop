@@ -56,27 +56,9 @@ def main() -> None:
     parser.add_argument("--device_map", default="auto")
     args = parser.parse_args()
 
-    try:
-        import torch
-        from transformers import AutoModel, AutoTokenizer
-    except ModuleNotFoundError as exc:
-        raise SystemExit(
-            "Qwen PRM scoring requires optional GPU dependencies: torch and transformers."
-        ) from exc
-
     input_path = Path(args.input_jsonl)
     output_path = Path(args.output_csv)
     output_path.parent.mkdir(parents=True, exist_ok=True)
-
-    tokenizer = AutoTokenizer.from_pretrained(args.model_name, trust_remote_code=True)
-    model = AutoModel.from_pretrained(
-        args.model_name,
-        device_map=args.device_map,
-        torch_dtype=torch.bfloat16,
-        trust_remote_code=True,
-    ).eval()
-    model.config.use_cache = False
-    sep_id = tokenizer.encode("<extra_0>")[0]
 
     done: set[tuple[str, int]] = set()
     if output_path.exists():
@@ -84,6 +66,37 @@ def main() -> None:
             reader = csv.DictReader(f)
             for row in reader:
                 done.add((row["trace_id"], int(row["step_id"])))
+
+    has_pending = any(
+        (trace["trace_id"], step_id) not in done
+        for _, trace in _iter_traces(input_path, args.start, args.max_traces)
+        for step_id in range(len(trace.get("steps", [])))
+    )
+    if not has_pending:
+        print(f"Complete cache; no model load needed: {output_path}")
+        return
+
+    try:
+        import torch
+        from transformers import AutoConfig, AutoModel, AutoTokenizer
+    except ModuleNotFoundError as exc:
+        raise SystemExit(
+            "Qwen PRM scoring requires optional GPU dependencies: torch and transformers."
+        ) from exc
+
+    tokenizer = AutoTokenizer.from_pretrained(args.model_name, trust_remote_code=True)
+    config = AutoConfig.from_pretrained(args.model_name, trust_remote_code=True)
+    if not hasattr(config, "pad_token_id"):
+        config.pad_token_id = tokenizer.pad_token_id
+    model = AutoModel.from_pretrained(
+        args.model_name,
+        config=config,
+        device_map=args.device_map,
+        torch_dtype=torch.bfloat16,
+        trust_remote_code=True,
+    ).eval()
+    model.config.use_cache = False
+    sep_id = tokenizer.encode("<extra_0>")[0]
 
     fields = ["trace_id", "dataset", "step_id", "qwen_prm_reward", "qwen_prm_error", "n_steps", "source_row"]
     write_header = not output_path.exists() or output_path.stat().st_size == 0
