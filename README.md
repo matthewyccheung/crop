@@ -1,5 +1,5 @@
 # Conformal Certification of Reasoning Trace Prefixes
-**EMNLP 2026 Main Conference — Oral Presentation**
+**EMNLP 2026 Main Conference — OUTSTANDING PAPER 🏆 and Oral Presentation**
 
 ![Overview of CROP](artifacts/crop_overview.png)
 
